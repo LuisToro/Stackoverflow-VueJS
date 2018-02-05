@@ -48,7 +48,8 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     noInfo: true,
-    overlay: true
+    overlay: true,
+    public: "c07e84a1e7cd4304a670101d5e037971.vfs.cloud9.us-east-2.amazonaws.com"
   },
   performance: {
     hints: false
