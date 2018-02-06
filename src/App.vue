@@ -10,9 +10,6 @@
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="email" v-model="user.email" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" v-model="user.password" required>
-        <!--<div class="alert alert-danger" role="alert" >-->
-        <!--  Usuario ó contraseña invalido.-->
-        <!--</div>-->
         <button @click.prevent="signin" class="btn btn-lg btn-primary btn-block" data-dismiss="alert">Sign in</button>
         <button class="btn btn-lg btn-success btn-block" data-toggle="modal" data-target="#exampleModal">Sign up</button>
         <b-btn v-b-modal.myModal class="btn btn-lg btn-block" variant="success">Show Modal</b-btn>
