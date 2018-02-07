@@ -1,7 +1,7 @@
 <template>
   <div id="app">
    <div v-if="!logged" class="container">
-     <!-- Login -->
+      <!--Login -->
       <img src="./assets/logoStack.png" alt="Logo Stackoverflow" class="img-login" height="100" width="100">
       <form id="signin" class="form-signin">
         <h2 class="form-signin-heading">Stackoverflow</h2>
@@ -11,178 +11,147 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" v-model="user.password" required>
         <button @click.prevent="signin" class="btn btn-lg btn-primary btn-block" data-dismiss="alert">Sign in</button>
-        <button class="btn btn-lg btn-success btn-block" data-toggle="modal" data-target="#exampleModal">Sign up</button>
-        <b-btn v-b-modal.myModal class="btn btn-lg btn-block" variant="success">Show Modal</b-btn>
+        <!--<button class="btn btn-lg btn-success btn-block" data-toggle="modal" data-target="#exampleModal">Sign up</button>-->
+        <b-btn v-b-modal.modalSignUp class="btn btn-lg btn-block" variant="success">Sign up</b-btn>
       </form>
-      <!-- Fin Login -->
+       <!--Fin Login -->
     </div> <!-- /container -->
-    
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <form id="signUp">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">SignUp</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <label for="inputFirstname">Firstname</label>
-              <input type="text" id="inputFirstname" class="form-control" placeholder="First Name" name="firstname" v-model="user.firstname" required >
-              <label for="inputLastname">Lastname</label>
-              <input type="text" id="inputLastname" class="form-control" placeholder="Last Name" name="lastname" v-model="user.lastname" required >
-              <label for="inputEmail">Email address</label>
-              <input type="email" id="inputNewEmail" class="form-control" placeholder="Email address" name="email" v-model="user.email" required >
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button @click.prevent="signup" type="button" class="btn btn-primary">SignUp</button>
-            </div>
-          </form>
+   
+    <!-- Inicio   -->
+    <div  v-if="logged"> 
+      <div class="blog-masthead">
+        <div class="container">
+          <nav class="nav blog-nav">
+            <img src="./assets/logoNavbar.png" alt="Logo Stackoverflow" height="50" width="auto">
+            <a class="nav-link active" style="margin-left:30px;" href="#">Questions</a>
+            <a class="nav-link" href="#">New Question</a>
+            <a v-if="!logged" class="nav-link" href="#">Login</a>
+            <a v-if="logged" class="nav-link" @click.prevent="signout" href="#">Logout</a>
+              <!--<form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="button">Login</button>
+              </form>  -->
+            <!--<b-btn v-b-modal.signinModal class="btn btn-outline-success my-2 my-sm-0">Sign In</b-btn>-->
+          </nav>
         </div>
       </div>
-    </div>
-    <!-- fin modal -->
-    
-    <!-- Inicio   -->
-    <div v-if="logged"> 
-      <div class="blog-masthead">
-      <div class="container">
-        <nav class="nav blog-nav">
-          <img src="./assets/logoNavbar.png" alt="Logo Stackoverflow" height="50" width="auto">
-          <a class="nav-link active" href="#">Question</a>
-        </nav>
+      
+      <!-- Create Question -->
+      <div v-if="logged"class="row ask-question">
+        <div class="container container-question">
+          <div class="col-md-12">
+            <form id="createQuestionForm">
+              <h5 class="ask-something">{{ user.firstname }}, do you want to ask something?</h5>
+              <div class="form-group">
+                <!--<label for="exampleFormControlTextarea1">{{ user.firstname }}, do you want to ask something?</label>-->
+              
+                <textarea name="text" class="form-control" id="exampleFormControlTextarea1" v-model="question.text" rows="3" required></textarea>
+              </div>
+              <!-- <input class="btn btn-secondary btn-sm btn-color" type="button" value="Post">  -->
+              <div class="btn-div">
+                <button @click.prevent="createQuestion" class="btn btn-md btn-color">Post</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
+      <!-- ./ Create Question -->
 
-    <div class="blog-header">
       <div class="container">
-        <h1 class="blog-title">The Bootstrap Blog</h1>
-        <p class="lead blog-description">An example blog template built with Bootstrap.</p>
-      </div>
-    </div>
-
-    <div class="container">
-
-      <div class="row">
-
-        <div class="col-sm-8 blog-main">
-
-          <div class="blog-post">
-            <h2 class="blog-post-title">Sample blog post</h2>
-            <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
-
-            <p>This blog post shows a few different types of content that's supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
-            <hr>
-            <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-            <blockquote>
-              <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-            </blockquote>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-            <h2>Heading</h2>
-            <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-            <h3>Sub-heading</h3>
-            <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-            <pre><code>Example code block</code></pre>
-            <p>Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
-            <h3>Sub-heading</h3>
-            <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <ul>
-              <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-              <li>Donec id elit non mi porta gravida at eget metus.</li>
-              <li>Nulla vitae elit libero, a pharetra augue.</li>
-            </ul>
-            <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-            <ol>
-              <li>Vestibulum id ligula porta felis euismod semper.</li>
-              <li>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</li>
-              <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-            </ol>
-            <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>
-          </div><!-- /.blog-post -->
-
-          <div class="blog-post">
-            <h2 class="blog-post-title">Another blog post</h2>
-            <p class="blog-post-meta">December 23, 2013 by <a href="#">Jacob</a></p>
-
-            <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-            <blockquote>
-              <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-            </blockquote>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-            <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-          </div><!-- /.blog-post -->
-
-          <div class="blog-post">
-            <h2 class="blog-post-title">New feature</h2>
-            <p class="blog-post-meta">December 14, 2013 by <a href="#">Chris</a></p>
-
-            <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <ul>
-              <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-              <li>Donec id elit non mi porta gravida at eget metus.</li>
-              <li>Nulla vitae elit libero, a pharetra augue.</li>
-            </ul>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-            <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-          </div><!-- /.blog-post -->
-
-          <nav class="blog-pagination">
+        
+        <div class="row">
+          <ul>
+            <li class="questions-border" v-for="question in questions" :key="question._id">
+              <div class="col-sm-12 blog-main">
+                <div class="blog-post">
+                 <!-- <h2 class="blog-post-title">Sample blog post</h2> -->
+                  <p><b>¿? - </b> {{ question.text }}</p>
+                  <p class="blog-post-meta">{{ question.author.firstname }} {{ question.author.lastname }} - <a href="#">{{ question.author.email }}</a>{{ question.createdAt }}</p>
+                  <hr>
+                  <div class="answers-div">
+                    <ul style="list-style: none;">
+                        <div class="list-group">
+                          <!-- Answer li -->
+                          <li class="answers-li" v-for="item in question.answers" :key="item._id">
+                            <div  class="list-group-item list-group-item-action flex-column align-items-start">
+                              <div class="d-flex w-100 justify-content-between">
+                                <!--<h6 class="mb-1">{{ answer.author.firstname }} {{ answer.author.lastname }} - <a href="#">{{ answer.author.email }}</a> </h6>-->
+                                <small>{{ item.createdAt }}</small>
+                              </div>
+                              <p class="mb-1">{{ item.text }}</p>
+                            </div>
+                          </li>
+                          <!-- /.Answer li -->
+                        </div>
+                    </ul>
+                  </div>
+                  
+                  <form v-if="logged" :id="question._id">
+                    <input type="hidden" name="question" :value="question._id">
+                    <div class="form-group">
+                      <!-- <label for="exampleFormControlTextarea1">Example textarea</label> -->
+                      <textarea class="form-control" name="text" rows="3" required></textarea>
+                    </div>
+                    
+                    <button @click.prevent="createAnswer"  class="btn btn-secondary btn-sm btn-color">Reply</button>
+                    
+                  </form>
+                  
+                </div><!-- /.blog-post -->
+              </div><!-- /.blog-main -->
+            </li> <!-- /. li Questions -->
+          </ul>
+        </div><!-- /.row -->
+        <nav class="blog-pagination">
             <a class="btn btn-outline-primary" href="#">Older</a>
             <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
           </nav>
-
-        </div><!-- /.blog-main -->
-
-        <div class="col-sm-3 offset-sm-1 blog-sidebar">
-          <div class="sidebar-module sidebar-module-inset">
-            <h4>About</h4>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-          </div>
-          <div class="sidebar-module">
-            <h4>Archives</h4>
-            <ol class="list-unstyled">
-              <li><a href="#">March 2014</a></li>
-              <li><a href="#">February 2014</a></li>
-              <li><a href="#">January 2014</a></li>
-              <li><a href="#">December 2013</a></li>
-              <li><a href="#">November 2013</a></li>
-              <li><a href="#">October 2013</a></li>
-              <li><a href="#">September 2013</a></li>
-              <li><a href="#">August 2013</a></li>
-              <li><a href="#">July 2013</a></li>
-              <li><a href="#">June 2013</a></li>
-              <li><a href="#">May 2013</a></li>
-              <li><a href="#">April 2013</a></li>
-            </ol>
-          </div>
-          <div class="sidebar-module">
-            <h4>Elsewhere</h4>
-            <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
-            </ol>
-          </div>
-        </div><!-- /.blog-sidebar -->
-
-      </div><!-- /.row -->
-
-    </div><!-- /.container -->
-
-    <footer class="blog-footer">
-      <p>Blog template built for <a href="https://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-      <p>
-        <a href="#">Back to top</a>
-      </p>
-    </footer>
-    </div>
+      </div><!-- /.container -->
+      <footer class="blog-footer">
+        <p>VueJS - Nodejs by Tengo Miedo.</p>
+        <p>
+          <a href="#">Back to top</a>
+        </p>
+      </footer>
+    </div>  <!-- div logged -->
     
-    <b-modal id="myModal" title="SignUp" @ok="handleOk" @shown="clearName">
+    
+    
+    <b-modal id="signinModal" ref = "signinModal" title="Signin">
+      <b-form id="signinForm">
+        <b-form-group id="signinEmailInputGroup"
+                    label="Email address:"
+                    label-for="signinEmailInput">
+          <b-form-input id="signipEmailInput"
+                        type="email"
+                        v-model="user.email"
+                        required
+                        placeholder="Enter email">
+          </b-form-input>
+        </b-form-group>
+        <b-form-group id="signinPasswordInputGroup"
+                    label="Password"
+                    label-for="signinPasswordInput">
+          <b-form-input id="signinPasswordInput"
+                        type="password"
+                        v-model="user.password"
+                        required
+                        placeholder="Enter password">
+          </b-form-input>
+        
+           <button @click.prevent="signin" class="btn btn-lg btn-primary btn-block" data-dismiss="alert">Sign in</button>
+        </b-form-group>
+        
+        
+      </b-form>
+      
+    </b-modal>
+    
+    
+    <b-modal ref="modalSignUp" id="modalSignUp" title="SignUp" @ok="handleOk" @shown="clearUserData">
      
-      <form @submit.stop.prevent="handleSubmit">
+      <form id="signupForm" hide-footer>
         <b-form-group id="signupFirstNameInputGroup"
                     label="Firstname:"
                     label-for="signupFirstNameInput">
@@ -214,13 +183,24 @@
                         placeholder="Enter email">
           </b-form-input>
         </b-form-group>
+        <b-form-group id="signupPasswordInputGroup"
+                    label="Password"
+                    label-for="signupPasswordInput">
+          <b-form-input id="signupPasswordInput"
+                        type="password"
+                        v-model="user.password"
+                        required
+                        placeholder="Enter password">
+          </b-form-input>
+        </b-form-group>
+        <button @click.prevent="handleSubmit" class="btn btn-lg btn-primary btn-block" data-dismiss="alert">Sign in</button>
       </form>
     </b-modal>
     
     <b-modal id="loginFailModal" ref="loginFailModal" title="Authenticacion Error">
       <p class="my-4">Login process failed. Please, check on your credentials.</p>
       <div slot="modal-footer" class="w-100">
-        <b-btn size="sm" class="float-right" variant="primary" @click="hideModal">
+        <b-btn size="sm" class="float-right" variant="primary" @click="hideLoginFailedModal">
           Close
         </b-btn>
       </div>
@@ -244,24 +224,31 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       logged : false,
+      loading: true,
       user: {
         firstname: '',
         lastname: '',
         email: '',
-        password: '',
+        password: ''
+      },
+      questions: [],
+      question: {
+        text: '',
+        user: '',
+        answers : []
       }
     }
   },
   created () {
-    //$('.alert').alert();
+    this.loadQuestions();
     
   },
   methods: {
     signin(){
       const form = document.getElementById('signin');
-      const payload = serialize(form);
+      const payload = serialize(form); 
+      //console.log("payload = " + payload); console.log("user =" + this.user );
 
       axios.post(`${config.baseURL}/users/login`, payload, {
         withCredentials: true,
@@ -270,44 +257,145 @@ export default {
         }
       })
       .then( response => {
-        console.log(response);
         this.logged = true;
+        this.user.firstname = response.data.user.firstname;
+        this.user.lastname = response.data.user.lastname;
         window.localStorage.setItem('token', response.data.token);
       })
       .catch ( res =>{
-        console.log("response = "+res);
         //$('#signinErrorModal').modal(show);
         //var signinModal = document.getElementById("signinErrorModal");
         //signinModal.modal(show);
-        this.showModal();
+        this.showLoginFailedModal();
       })
     },
-    showModal () {
+    
+    
+    
+    loadQuestions(){
+      axios.get(`${config.baseURL}/questions`,{
+        withCredentials: true
+      })
+      .then(response => {
+        this.loading = false;
+        this.questions = response.data.data;
+      })
+    },
+    createQuestion(){
+      const form = document.getElementById('createQuestionForm');
+      let payload = serialize(form);
+      payload+=`&token=${window.localStorage.getItem('token')}`;
+      axios.post(`${config.baseURL}/questions`, payload, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then( response => {
+        this.loadQuestions();
+      })
+    },
+    
+    createAnswer(event){
+      let form = event.currentTarget.parentElement;
+      //const form = document.getElementById('createAnswerForm');
+      
+      let payload = serialize(form);
+      //console.log("payload = " + payload);
+      //payload+=`&token=${window.localStorage.getItem('token')}`;
+      
+      axios.post(`${config.baseURL}/answers?token=${window.localStorage.getItem('token')}`, payload, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then( response => {
+        this.loadQuestions();
+      })
+    },
+    loadAnswers(){
+      axios.get(`${config.baseURL}/answers`,{
+        withCredentials: true
+      })
+      .then(response => {
+        this.loading = false;
+        this.answers = response.data.data;
+      })
+    },
+    
+    
+    
+    
+    
+    showLoginFailedModal () {
       this.$refs.loginFailModal.show()
     },
-    hideModal () {
+    hideLoginFailedModal () {
       this.$refs.loginFailModal.hide()
     },
-    clearName () {
-      this.user.firstname = ''
+    clearUserData () {
+      this.user.firstname = '';
+      this.user.lastname = "";
+      this.user.email = "";
+      this.user.password = "";
     },
     handleOk (evt) {
       // Prevent modal from closing
       evt.preventDefault()
       if (!this.user.firstname) {
-        alert('Please enter your name')
-      } else {
-        this.handleSubmit()
+        alert('Please enter your first name')
+        return;
       }
+      if (!this.user.lastname) {
+        alert('Please enter your last name')
+        return;
+      }
+      if (!this.user.email) {
+        alert('Please enter your email')
+        return;
+      }
+      if (!this.user.password) {
+        alert('Please enter your password')
+        return;
+      }
+     
+      this.handleSubmit()
+      
     },
     handleSubmit () {
       // Aquí se define qué hacer con la info obtenida en el signUp
-      //this.user.firstname = this.firstname;
-      this.clearName()
-      this.$refs.myModal.hide()
+      
+      const form = document.getElementById('signupForm');
+      //const payload = serialize(form); 
+      const payload = `firstname=${this.user.firstname}&lastname=${this.user.lastname}&email=${this.user.email}&password=${this.user.password}` 
+      //console.log("payload = " + payload); console.log("user =" + this.user )
+
+      axios.post(`${config.baseURL}/users/signup`, payload, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then( response => {
+        //console.log(response);
+        this.logged = true;
+        window.localStorage.setItem('token', response.data.token);
+      })
+      .catch ( res =>{
+        
+        this.showLoginFailedModal();
+      })
+      
+      //this.clearUserData()
+      this.$refs.modalSignUp.hide()
+    },
+     signout(){
+      this.logged = false;
+      window.localStorage.removeItem('token');
+      this.clearUserData();
     }
   }
-  
 }
 </script>
 
@@ -409,11 +497,12 @@ h6, .h6 {
   position: relative;
   padding: 1rem;
   font-weight: 500;
-  color: #cdddeb;
+  color: #fff;
 }
+
 .nav-link:hover,
 .nav-link:focus {
-  color: #fff;
+  color: black;
   background-color: transparent;
 }
 
@@ -523,4 +612,63 @@ h6, .h6 {
 .blog-footer p:last-child {
   margin-bottom: 0;
 }
+
+.answers-div{
+  margin-left: 35px;
+}
+
+.btn-div{
+  margin-top: 15px;
+  display: block;
+  text-align: right;
+}
+
+.btn-color{
+  background-color: #C7C7BB !important;
+  font-weight: bold;
+}
+
+.list-group-item{
+  border: 0px solid rgba(0,0,0,.125) !important;
+  border-left: 1px solid rgba(0,0,0,.125) !important;
+  border-bottom: 1px solid rgba(0,0,0,.125) !important;
+}
+
+.answers-li{
+  margin-bottom: 15px;
+}
+
+.questions-border{
+  padding-right: 45px;
+  border-right: 3px solid rgba(199,199,187,5) !important;
+  
+}
+
+.ask-question{
+  background-color: rgba(245,245,245,1);
+  padding-top: 1rem;
+  padding-bottom: 1.3rem;
+  margin-left:0;
+  margin-right:0;
+  margin-bottom: 30px;
+  border-bottom: 2px solid rgba(199,199,187,1) !important;
+  border-bottom-left-radius: 80px;
+  border-bottom-right-radius: 80px;
+}
+
+.container-question {
+  background-color: rgba(233,126,59,.9);
+  border-radius: 15px;
+  padding: 15px;
+  
+}
+
+.blog-masthead {
+ margin-bottom: 0 !important;
+}
+
+.ask-something{
+  color: white;
+}
+
 </style>
